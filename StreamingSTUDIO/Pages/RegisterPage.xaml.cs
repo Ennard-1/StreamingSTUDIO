@@ -1,6 +1,6 @@
-using StreamingStudio.Services;
+using StreamingSTUDIO.Services;
 
-namespace StreamingStudio.Pages;
+namespace StreamingSTUDIO.Pages;
 
 public partial class RegisterPage : ContentPage
 {

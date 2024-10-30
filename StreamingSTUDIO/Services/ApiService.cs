@@ -2,7 +2,7 @@
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using StreamingStudio.Services;
+using StreamingSTUDIO.Services;
 
 namespace StreamingSTUDIO.Services
 {
@@ -36,19 +36,13 @@ namespace StreamingSTUDIO.Services
             return await _httpClient.PostAsync("/api/Auth/register", content);
         }
 
-        public async Task<string?> Login(string email, string senha)
+        public async Task<HttpResponseMessage> Login(string email, string senha)
         {
             var payload = new { email, senha };
             var content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync("/api/Auth/login", content);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var result = JsonSerializer.Deserialize<Dictionary<string, string>>(await response.Content.ReadAsStringAsync());
-                return result?["token"];
-            }
-            return null;
+            return await _httpClient.PostAsync("/api/Auth/login", content);
         }
+
 
         public async Task<HttpResponseMessage> GetUserInfo()
         {

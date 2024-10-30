@@ -1,5 +1,7 @@
+
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             x:Class="StreamingStudio.Pages.PostPage"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="StreamingSTUDIO.Pages.PostPage"
              Title="Postar Vídeo">
     <VerticalStackLayout Padding="10" Spacing="10">
         <Entry x:Name="TituloEntry" Placeholder="Título" />
