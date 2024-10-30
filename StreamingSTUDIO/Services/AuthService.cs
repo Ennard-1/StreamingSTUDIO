@@ -1,38 +1,111 @@
-﻿using StreamingSTUDIO.Models;
-using System.Net.Http.Json;
+﻿using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Text.Json;
+using StreamingStudio.Services;
 
-public class AuthService
+namespace StreamingSTUDIO.Services
 {
-    private readonly HttpClient _httpClient = new HttpClient();
-    private const string BaseUrl = "https://sua-api.com/";
-
-    public async Task<string> LoginAsync(string email, string senha)
+    public class ApiService
     {
-        var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}auth/login",
-            new { email, senha });
+        private readonly HttpClient _httpClient;
+        private readonly TokenService _tokenService;
 
-        if (response.IsSuccessStatusCode)
+        public ApiService(TokenService tokenService)
         {
-            var result = await response.Content.ReadFromJsonAsync<dynamic>();
-            return result.token;
+            _httpClient = new HttpClient
+            {
+                BaseAddress = new Uri("https://api.streamingtv.com") // Ajuste para a URL da sua API
+            };
+            _tokenService = tokenService;
         }
-        throw new Exception("Falha no login.");
-    }
 
-    public async Task<Usuario> ObterInfoUsuarioAsync(string token)
-    {
-        _httpClient.DefaultRequestHeaders.Authorization =
-            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+        private void AddAuthHeader()
+        {
+            var token = _tokenService.GetToken();
+            if (token != null)
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
+        }
 
-        return await _httpClient.GetFromJsonAsync<Usuario>($"{BaseUrl}auth/info");
-    }
+        public async Task<HttpResponseMessage> Register(string nome, string email, string senha)
+        {
+            var payload = new { nome, email, senha };
+            var content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
+            return await _httpClient.PostAsync("/api/Auth/register", content);
+        }
 
-    public async Task RegistrarAsync(string nome, string email, string senha)
-    {
-        var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}auth/register",
-            new { nome, email, senha });
+        public async Task<string?> Login(string email, string senha)
+        {
+            var payload = new { email, senha };
+            var content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("/api/Auth/login", content);
 
-        if (!response.IsSuccessStatusCode)
-            throw new Exception("Erro ao registrar.");
+            if (response.IsSuccessStatusCode)
+            {
+                var result = JsonSerializer.Deserialize<Dictionary<string, string>>(await response.Content.ReadAsStringAsync());
+                return result?["token"];
+            }
+            return null;
+        }
+
+        public async Task<HttpResponseMessage> GetUserInfo()
+        {
+            AddAuthHeader();
+            return await _httpClient.GetAsync("/api/Auth/info");
+        }
+
+        public async Task<HttpResponseMessage> GetUserContent()
+        {
+            AddAuthHeader();
+            return await _httpClient.GetAsync("/api/Conteudo/usuario");
+        }
+
+        public async Task<HttpResponseMessage> UploadContent(string titulo, string tipo, Stream file, Stream thumbnail)
+        {
+            AddAuthHeader();
+            var content = new MultipartFormDataContent
+            {
+                { new StringContent(titulo), "Titulo" },
+                { new StringContent(tipo), "Tipo" },
+                { new StreamContent(file), "File", "video.mp4" },
+                { new StreamContent(thumbnail), "Thumbnail", "image.jpg" }
+            };
+            return await _httpClient.PostAsync("/api/Conteudo", content);
+        }
+
+        public async Task<HttpResponseMessage> UpdateContent(int id, string titulo, string tipo, Stream? file = null, Stream? thumbnail = null)
+        {
+            AddAuthHeader();
+            var content = new MultipartFormDataContent
+            {
+                { new StringContent(titulo), "Titulo" },
+                { new StringContent(tipo), "Tipo" }
+            };
+
+            if (file != null) content.Add(new StreamContent(file), "File", "video.mp4");
+            if (thumbnail != null) content.Add(new StreamContent(thumbnail), "Thumbnail", "image.jpg");
+
+            return await _httpClient.PutAsync($"/api/Conteudo/{id}", content);
+        }
+
+        public async Task<HttpResponseMessage> DeleteContent(int id)
+        {
+            AddAuthHeader();
+            return await _httpClient.DeleteAsync($"/api/Conteudo/{id}");
+        }
+
+        public async Task<Stream> GetThumbnail(string thumbnail)
+        {
+            AddAuthHeader();
+            return await _httpClient.GetStreamAsync($"/api/Conteudo/thumbnails/{thumbnail}");
+        }
+
+        public async Task<Stream> StreamVideo(string fileName)
+        {
+            AddAuthHeader();
+            return await _httpClient.GetStreamAsync($"/api/Conteudo/stream/{fileName}");
+        }
     }
 }

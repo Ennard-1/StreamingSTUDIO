@@ -1,0 +1,10 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             x:Class="StreamingStudio.Pages.RegisterPage"
+             Title="Registrar">
+    <VerticalStackLayout Padding="10" Spacing="10">
+        <Entry x:Name="NomeEntry" Placeholder="Nome" />
+        <Entry x:Name="EmailEntry" Placeholder="Email" Keyboard="Email" />
+        <Entry x:Name="SenhaEntry" Placeholder="Senha" IsPassword="True" />
+        <Button Text="Registrar" Clicked="OnRegisterClicked" />
+    </VerticalStackLayout>
+</ContentPage>

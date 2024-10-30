@@ -4,12 +4,18 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:StreamingSTUDIO"
+    xmlns:pages="clr-namespace:StreamingStudio.Pages"
     Shell.FlyoutBehavior="Disabled"
     Title="StreamingSTUDIO">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <TabBar>
+        <ShellContent Title="Home" ContentTemplate="{DataTemplate pages:HomePage}" />
+        <ShellContent Title="Conta" ContentTemplate="{DataTemplate pages:AccountPage}" />
+    </TabBar>
+
+     <ShellContent Route="login" ContentTemplate="{DataTemplate pages:LoginPage}" />
+    <ShellContent Route="register" ContentTemplate="{DataTemplate pages:RegisterPage}" />
+    <ShellContent Route="post" ContentTemplate="{DataTemplate pages:PostPage}" />
+    <ShellContent Route="update" ContentTemplate="{DataTemplate pages:UpdatePage}" />
 
 </Shell>

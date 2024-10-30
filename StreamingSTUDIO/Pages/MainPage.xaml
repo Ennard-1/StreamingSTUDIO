@@ -1,0 +1,26 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             x:Class="StreamingStudio.Pages.MainPage"
+             Title="StreamingSTUDIO">
+    <VerticalStackLayout Spacing="10" Padding="10">
+
+        <!-- Barra Superior -->
+        <HorizontalStackLayout VerticalOptions="Start" Spacing="15">
+            <Label Text="StreamingSTUDIO" FontSize="24" FontAttributes="Bold" />
+            <Button Text="Adicionar" HorizontalOptions="CenterAndExpand" Clicked="OnAddVideoClicked"/>
+            <Button Text="Conta" Clicked="OnAccountClicked" />
+        </HorizontalStackLayout>
+
+        <!-- Lista de Vídeos -->
+        <CollectionView x:Name="VideosCollectionView" Margin="0,10,0,0">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="10" ColumnDefinitions="*, Auto, Auto">
+                        <Label Grid.Column="0" Text="{Binding titulo}" FontSize="18" />
+                        <Button Grid.Column="1" Text="Atualizar" Clicked="OnUpdateVideoClicked"/>
+                        <Button Grid.Column="2" Text="Deletar" Clicked="OnDeleteVideoClicked"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

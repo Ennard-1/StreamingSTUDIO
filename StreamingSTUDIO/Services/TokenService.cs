@@ -1,13 +1,29 @@
-﻿public class TokenService
+﻿using Microsoft.Maui.Storage;
+
+namespace StreamingSTUDIO.Services
 {
-    private const string TokenKey = "auth_token";
+    public class TokenService
+    {
+        private const string TokenKey = "jwt_token";
 
-    public void SaveToken(string token) =>
-        Preferences.Set(TokenKey, token);
+        public void SaveToken(string token)
+        {
+            Preferences.Set(TokenKey, token);
+        }
 
-    public string GetToken() =>
-        Preferences.Get(TokenKey, string.Empty);
+        public string? GetToken()
+        {
+            return Preferences.Get(TokenKey, null);
+        }
 
-    public void ClearToken() =>
-        Preferences.Remove(TokenKey);
+        public void DeleteToken()
+        {
+            Preferences.Remove(TokenKey);
+        }
+
+        public bool HasToken()
+        {
+            return !string.IsNullOrEmpty(GetToken());
+        }
+    }
 }

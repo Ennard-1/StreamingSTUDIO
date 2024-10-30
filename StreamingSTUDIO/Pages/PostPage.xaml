@@ -1,0 +1,13 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             x:Class="StreamingStudio.Pages.PostPage"
+             Title="Postar Vídeo">
+    <VerticalStackLayout Padding="10" Spacing="10">
+        <Entry x:Name="TituloEntry" Placeholder="Título" />
+        <Entry x:Name="TipoEntry" Placeholder="Tipo" />
+        
+        <Button Text="Selecionar Thumbnail" Clicked="OnSelectThumbnailClicked" />
+        <Button Text="Selecionar Vídeo" Clicked="OnSelectVideoClicked" />
+        
+        <Button Text="Postar" Clicked="OnPostClicked" />
+    </VerticalStackLayout>
+</ContentPage>

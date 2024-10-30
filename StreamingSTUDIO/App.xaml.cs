@@ -1,12 +1,12 @@
-﻿namespace StreamingSTUDIO{
-public partial class App : Application
+﻿namespace StreamingSTUDIO
 {
-    public App()
+    public partial class App : Application
     {
-        InitializeComponent();
+        public App()
+        {
+            InitializeComponent();
 
-        // Verificar se há token na memória e navegar para a página correta
-        MainPage = new NavigationPage(new AuthPage());
+            MainPage = new NavigationPage(new HomePage());
+        }
     }
 }
-  }
