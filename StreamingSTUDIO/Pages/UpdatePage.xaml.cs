@@ -1,4 +1,5 @@
 using Microsoft.Maui.Storage;
+using StreamingSTUDIO.Models;
 using StreamingSTUDIO.Services;
 
 namespace StreamingSTUDIO.Pages;
@@ -10,14 +11,15 @@ public partial class UpdatePage : ContentPage
     private FileResult? _selectedVideo;
     private FileResult? _selectedThumbnail;
 
-    public UpdatePage(ApiService apiService, Video video)
+    public UpdatePage(Video video)
     {
         InitializeComponent();
-        _apiService = apiService;
+        _apiService = new ApiService();
         _video = video;
 
-        TituloEntry.Text = video.titulo;
-        TipoEntry.Text = video.tipo;
+        // Inicializando os campos com as informações do vídeo
+        TituloEntry.Text = video.Titulo;
+        TipoEntry.Text = video.Tipo;
     }
 
     private async void OnSelectThumbnailClicked(object sender, EventArgs e)
@@ -33,7 +35,7 @@ public partial class UpdatePage : ContentPage
     private async void OnUpdateClicked(object sender, EventArgs e)
     {
         await _apiService.UpdateContent(
-            _video.id,
+            _video.Id,
             TituloEntry.Text,
             TipoEntry.Text,
             _selectedVideo?.OpenReadAsync().Result,

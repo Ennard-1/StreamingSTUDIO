@@ -15,11 +15,19 @@
         <CollectionView x:Name="VideosCollectionView" Margin="0,10,0,0">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Padding="10" ColumnDefinitions="*, Auto, Auto">
-                        <Label Grid.Column="0" Text="{Binding titulo}" FontSize="18" />
-                        <Button Grid.Column="1" Text="Atualizar" Clicked="OnUpdateVideoClicked"/>
-                        <Button Grid.Column="2" Text="Deletar" Clicked="OnDeleteVideoClicked"/>
-                    </Grid>
+                    <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="5">
+                        <StackLayout>
+                            <Image Source="{Binding Thumbnail}" 
+                                   Aspect="AspectFill" 
+                                   WidthRequest="150" 
+                                   HeightRequest="150" />
+                            <Label Text="{Binding Titulo}" FontSize="18" FontAttributes="Bold" />
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                <Button Text="Atualizar" Clicked="OnUpdateVideoClicked" />
+                                <Button Text="Deletar" Clicked="OnDeleteVideoClicked" />
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

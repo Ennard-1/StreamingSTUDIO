@@ -9,7 +9,7 @@ public partial class PostPage : ContentPage
     private FileResult? _selectedVideo;
     private FileResult? _selectedThumbnail;
 
-    public PostPage(ApiService apiService)
+    public PostPage(ApiService apiService, Models.Video video)
     {
         InitializeComponent();
         _apiService = apiService;

@@ -6,24 +6,24 @@ namespace StreamingSTUDIO.Services
     {
         private const string TokenKey = "jwt_token";
 
-        public void SaveToken(string token)
+        public static void SaveToken(string token)
         {
             Preferences.Set(TokenKey, token);
         }
 
-        public string? GetToken()
+        public static string? GetToken()
         {
             return Preferences.Get(TokenKey, null);
         }
 
-        public void DeleteToken()
+        public static void DeleteToken()
         {
             Preferences.Remove(TokenKey);
         }
 
-        public bool HasToken()
+        public static bool HasToken()
         {
-            return !string.IsNullOrEmpty(GetToken());
+            return !string.IsNullOrEmpty(TokenService.GetToken());
         }
     }
 }

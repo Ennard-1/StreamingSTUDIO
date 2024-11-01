@@ -6,10 +6,10 @@ public partial class RegisterPage : ContentPage
 {
     private readonly ApiService _apiService;
 
-    public RegisterPage(ApiService apiService)
+    public RegisterPage()
     {
         InitializeComponent();
-        _apiService = apiService;
+        _apiService = new ApiService();
     }
 
     private async void OnRegisterClicked(object sender, EventArgs e)

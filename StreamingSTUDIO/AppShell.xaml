@@ -9,11 +9,12 @@
     Title="StreamingSTUDIO">
 
     <TabBar>
-        <ShellContent Title="Home" ContentTemplate="{DataTemplate pages:HomePage}" />
+        <ShellContent Title="Home" ContentTemplate="{DataTemplate pages:MainPage}" />
         <ShellContent Title="Conta" ContentTemplate="{DataTemplate pages:AccountPage}" />
     </TabBar>
 
      <ShellContent Route="login" ContentTemplate="{DataTemplate pages:LoginPage}" />
+    <ShellContent Route="login_and_register" ContentTemplate="{DataTemplate pages:LoginRegisterPage}" />
     <ShellContent Route="register" ContentTemplate="{DataTemplate pages:RegisterPage}" />
     <ShellContent Route="post" ContentTemplate="{DataTemplate pages:PostPage}" />
     <ShellContent Route="update" ContentTemplate="{DataTemplate pages:UpdatePage}" />
