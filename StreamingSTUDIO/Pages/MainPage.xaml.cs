@@ -9,20 +9,19 @@ public partial class MainPage : ContentPage
 {
     private readonly ApiService _apiService;
 
-    // Removendo o Video, pois não está sendo utilizado na classe
-    // private readonly Video _video;
+   
 
      public MainPage()
     {
         InitializeComponent();
-        // Inicializando o ApiService
+     
         _apiService = new ApiService();
-        LoadVideos(); // Chamando LoadVideos após a inicialização do _apiService
+        LoadVideos(); 
     }
     protected override async void OnAppearing()
     {
-        base.OnAppearing(); // Chama o método base
-        await LoadVideos(); // Recarrega os vídeos ao voltar para a página
+        base.OnAppearing(); 
+        await LoadVideos();
     }
     private async Task LoadVideos()
     {
@@ -33,10 +32,10 @@ public partial class MainPage : ContentPage
             {
                 var videos = await response.Content.ReadFromJsonAsync<List<Video>>();
 
-                // Atualiza a propriedade Thumbnail para a URL completa usando a BaseUrl
+               
                 foreach (var video in videos)
                 {
-                    video.Thumbnail = $"{_apiService.BaseUrl}/api/Conteudo/thumbnails/{video.Thumbnail}"; // Construa a URL completa
+                    video.Thumbnail = $"{_apiService.BaseUrl}/api/Conteudo/thumbnails/{video.Thumbnail}"; 
                 }
 
                 VideosCollectionView.ItemsSource = videos;
@@ -55,7 +54,7 @@ public partial class MainPage : ContentPage
 
     private async void OnAddVideoClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new PostPage(_apiService, null)); // Passando null se não houver um vídeo
+        await Navigation.PushAsync(new PostPage(_apiService, null)); 
     }
 
     private async void OnUpdateVideoClicked(object sender, EventArgs e)
@@ -63,7 +62,7 @@ public partial class MainPage : ContentPage
         var video = (sender as Button)?.BindingContext as Video;
         if (video != null)
         {
-            // Passando o objeto video completo para a UpdatePage
+            
             await Navigation.PushAsync(new UpdatePage(video));
         }
     }
@@ -75,7 +74,7 @@ public partial class MainPage : ContentPage
         if (video != null)
         {
             await _apiService.DeleteContent(video.Id);
-            LoadVideos(); // Recarregar vídeos após a exclusão
+            LoadVideos();
         }
     }
 

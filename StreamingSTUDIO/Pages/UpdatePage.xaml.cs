@@ -17,7 +17,7 @@ public partial class UpdatePage : ContentPage
         _apiService = new ApiService();
         _video = video;
 
-        // Inicializando os campos com as informações do vídeo
+        
         TituloEntry.Text = video.Titulo;
         TipoEntry.Text = video.Tipo;
     }

@@ -47,11 +47,11 @@ namespace StreamingSTUDIO.Services
 
             if (response.IsSuccessStatusCode)
             {
-                // Aqui você deve pegar o token do corpo da resposta
+
                 var responseContent = await response.Content.ReadAsStringAsync();
                 var loginResponse = JsonConvert.DeserializeObject<LoginResponse>(responseContent);
 
-                // Supondo que o token esteja em uma propriedade chamada "token"
+
                 if (loginResponse?.token != null)
                 {
                     TokenService.SaveToken(loginResponse.token);
@@ -83,7 +83,7 @@ namespace StreamingSTUDIO.Services
         }
         public async Task<ImageSource> GetThumbnailImage(string thumbnail)
         {
-            var url = $"/api/Conteudo/thumbnails/{thumbnail}"; // URL da API
+            var url = $"/api/Conteudo/thumbnails/{thumbnail}";
             var response = await _httpClient.GetAsync(url);
 
             if (response.IsSuccessStatusCode)
@@ -93,8 +93,7 @@ namespace StreamingSTUDIO.Services
             }
             else
             {
-                // Retorne uma imagem padrão em caso de erro
-                return ImageSource.FromFile("default_thumbnail.png"); // Substitua pelo seu caminho padrão
+                return ImageSource.FromFile("default_thumbnail.png");
             }
         }
 

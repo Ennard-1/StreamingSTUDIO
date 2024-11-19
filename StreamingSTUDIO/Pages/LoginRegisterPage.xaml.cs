@@ -12,12 +12,12 @@ namespace StreamingSTUDIO.Pages
 
         private async void OnLoginClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new LoginPage()); // Certifique-se de ter a LoginPage implementada
+            await Navigation.PushAsync(new LoginPage()); 
         }
 
         private async void OnRegisterClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new RegisterPage()); // Certifique-se de ter a RegisterPage implementada
+            await Navigation.PushAsync(new RegisterPage()); 
         }
     }
 }
